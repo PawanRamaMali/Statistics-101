@@ -19,3 +19,17 @@ I have realized that many students (especially in introductory statistic classes
 For this reason, I though it would be useful to write an article on the goal of hypothesis tests (the “why?”), in which context they should be used (the “when?”), how they work (the “how?”) and how to interpret the results (the “so what?”). Like anything else in statistics, it becomes much easier to apply a concept in practice when we understand what we are testing or what we are trying to demonstrate beforehand.
 
 In this article, I present—as comprehensibly as possible—the different steps required to perform and conclude a hypothesis test by hand. These steps are illustrated with a basic example. This will build the theoretical foundations of hypothesis testing, which will in turn be of great help for the understanding of most statistical tests.
+
+Hypothesis tests come in many forms and can be used for many parameters or research questions. The steps I present in this article are not applicable to all hypothesis test, unfortunately. They are however, appropriate for at least the most common hypothesis tests—the tests on:
+
+* One mean: μ
+* Two means:
+* independent samples: μ1 and μ2
+* paired samples: μD
+* One proportion: p
+* Two proportions: p1 and p2
+* One variance: σ2
+* Two variances: σ21 and σ22
+
+The good news is that the principles behind these 6 statistical tests (and many more) are exactly the same. So if you understand the intuition and the process for one of them, all others pretty much follow.
+
