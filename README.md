@@ -39,3 +39,23 @@ Unlike descriptive statistics where we only describe the data at hand, hypothesi
 
 One may wonder why we would try to “guess” or make inference about a parameter of a population based on a sample, instead of simply collecting data for the entire population, compute statistics we are interested in and take decisions based upon that. The main reason we actually use a sample instead of the entire population is because, most of the time, collecting data on the entire population is practically impossible, too complex, too expensive, it would take too long, or a combination of any of these
 
+In practice, we take some measurements of the variable of interest—representing the sample(s)—and we check whether our measurements are likely or not given our assumption (our belief). Based on the probability of observing the sample(s) we have, we decide whether we can trust our belief or not.
+
+When?
+Hypothesis tests have many practical applications. Here are different situations illustrating when the 6 tests mentioned above would be appropriate:
+
+One mean: suppose that a health professional would like to test whether the mean weight of Belgian adults is different than 80 kg (176.4 lbs).
+Two means:
+Independent samples: suppose that a physiotherapist would like to test the effectiveness of a new treatment by measuring the mean response time (in seconds) for patients in a control group and patients in a treatment group, where patients in the two groups are different.
+Paired samples: suppose that a physiotherapist would like to test the effectiveness of a new treatment by measuring the mean response time (in seconds) before and after a treatment, where patients are measured twice—before and after treatment, so patients are the same in the 2 samples.
+One proportion: suppose that a political pundit would like to test whether the proportion of citizens who are going to vote for a specific candidate is smaller than 30%.
+Two proportions: suppose that a doctor would like to test whether the proportion of smokers is different between professional and amateur athletes.
+One variance: suppose that an engineer would like to test whether a voltmeter has a lower variability than what is imposed by the safety standards.
+Two variances: suppose that, in a factory, two production lines work independently from each other. The financial manager would like to test whether the costs of the weekly maintenance of these two machines have the same variance. Note that a test on two variances is also often performed to verify the assumption of equal variances, which is required for several other statistical tests, such as the Student’s t-test for instance.
+Of course, this is a non-exhaustive list of potential applications and many research questions can be answered thanks to a hypothesis test.
+
+One important point to remember is that in hypothesis testing we are always interested in the population and not in the sample. The sample is used for the aim of drawing conclusions about the population, so we always test in terms of the population.
+
+Usually, hypothesis tests are used to answer research questions in confirmatory analyses. Confirmatory analyses refer to statistical analyses where hypotheses—deducted from theory—are defined beforehand (preferably before data collection). In this approach, the researcher has a specific idea about the variables under consideration and she is trying to see if her idea, specified as hypotheses, is supported by data.
+
+On the other hand, hypothesis tests are rarely used in exploratory analyses.2 Exploratory analyses aims to uncover possible relationships between the variables under investigation. In this approach, the researcher does not have any clear theory-driven assumptions or ideas in mind before data collection. This is the reason exploratory analyses are sometimes referred as hypothesis-generating analyses—they are used to create some hypotheses, which in turn may be tested via confirmatory analyses at a later stage.
