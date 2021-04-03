@@ -12,3 +12,10 @@ The two most important tools used in the domain of inferential statistics are:
 * hypothesis test , and
 * confidence interval 
 
+### Motivation and Reason
+
+I have realized that many students (especially in introductory statistic classes) struggle to perform hypothesis tests and interpret the results. It seems to me that these students often encounter difficulties mainly because hypothesis testing is rather unclear and abstract to them. One of the reason it looks abstract to them is because they do not understand the final goal of hypothesis testing—the “why” behind this tool. They often do inferential statistics without understanding the reasoning behind it, as if they were following a cooking recipe which does not require any thinking. However, as soon as they understand the principle underlying hypothesis testing, it is much easier for them to apply the concepts.
+
+For this reason, I though it would be useful to write an article on the goal of hypothesis tests (the “why?”), in which context they should be used (the “when?”), how they work (the “how?”) and how to interpret the results (the “so what?”). Like anything else in statistics, it becomes much easier to apply a concept in practice when we understand what we are testing or what we are trying to demonstrate beforehand.
+
+In this article, I present—as comprehensibly as possible—the different steps required to perform and conclude a hypothesis test by hand. These steps are illustrated with a basic example. This will build the theoretical foundations of hypothesis testing, which will in turn be of great help for the understanding of most statistical tests.
