@@ -33,3 +33,9 @@ Hypothesis tests come in many forms and can be used for many parameters or resea
 
 The good news is that the principles behind these 6 statistical tests (and many more) are exactly the same. So if you understand the intuition and the process for one of them, all others pretty much follow.
 
+### Hypothesis test . Why?
+
+Unlike descriptive statistics where we only describe the data at hand, hypothesis tests use a subset of observations, referred as a sample, to draw conclusions about a population.
+
+One may wonder why we would try to “guess” or make inference about a parameter of a population based on a sample, instead of simply collecting data for the entire population, compute statistics we are interested in and take decisions based upon that. The main reason we actually use a sample instead of the entire population is because, most of the time, collecting data on the entire population is practically impossible, too complex, too expensive, it would take too long, or a combination of any of these
+
