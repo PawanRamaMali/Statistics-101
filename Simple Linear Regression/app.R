@@ -5,12 +5,13 @@ library(rmarkdown)
 library(knitr)
 library(pander)
 
-# Define UI for application that draws a histogram
+
 ui <- fluidPage(
-    
-    # Application title
+  
     titlePanel("Statistics 101 - Simple linear regression"),
-    h4(tags$a(href = "https://www.github.com/PawanRamaMali", "Pawan Rama Mali")),
+    h4(
+        tags$a(href = "https://www.github.com/PawanRamaMali", "Pawan Rama Mali")
+    ),
     withMathJax(),
     
     sidebarLayout(
@@ -21,41 +22,67 @@ ui <- fluidPage(
             hr(),
             tags$b("Plot:"),
             checkboxInput("se", "Add confidence interval around the regression line", TRUE),
-            textInput("xlab", label = "Axis labels:", value = "x", placeholder = "x label"),
-            textInput("ylab", label = NULL, value = "y", placeholder = "y label"),
-            hr(),
-            # textInput("pred", "Prediction of y when x = ", value = "100, 110, 100, 90, 97, 85", placeholder = "Enter values separated by a comma with decimals as points, e.g. 4.2, 4.4, 5, 5.03, etc."),
-            # hr(),
-            radioButtons("format", "Download report:", c("HTML", "PDF", "Word"),
-                         inline = TRUE
+            textInput(
+                "xlab",
+                label = "Axis labels:",
+                value = "x",
+                placeholder = "x label"
             ),
+            textInput(
+                "ylab",
+                label = NULL,
+                value = "y",
+                placeholder = "y label"
+            ),
+            hr(),
+   
+            radioButtons("format", "Download report:", c("HTML", "PDF", "Word"),
+                         inline = TRUE),
             checkboxInput("echo", "Show code in report?", FALSE),
             downloadButton("downloadReport"),
             hr(),
-           
+            
             hr()
         ),
         
         mainPanel(
-            tags$b("Your data:"),
-            DT::dataTableOutput("tbl"),
-            br(),
-            uiOutput("data"),
-            br(),
-            tags$b("Compute parameters by hand:"),
-            uiOutput("by_hand"),
-            br(),
-            tags$b("Compute parameters in R:"),
-            verbatimTextOutput("summary"),
-            br(),
-            tags$b("Regression plot:"),
-            uiOutput("results"),
-            plotlyOutput("plot"),
-            br(),
-            tags$b("Interpretation:"),
-            uiOutput("interpretation"),
-            br(),
-            br()
+            tabsetPanel(
+                tabPanel("Data ",
+                         br(),
+                         tags$b("Input data:"),
+                         DT::dataTableOutput("tbl"),
+                         br()),
+                tabPanel("Parameters",
+                         uiOutput("data"),)
+                ,
+                tabPanel(
+                    "Compute parameters by Hand",
+                    tags$b("Compute parameters by hand:"),
+                    uiOutput("by_hand")
+                ),
+                tabPanel(
+                    "Compute parameters ",
+                    tags$b("Compute parameters in R:"),
+                    
+                    verbatimTextOutput("summary")
+                ),
+                tabPanel(
+                    "Regression plot ",
+                    tags$b("Regression plot:"),
+                    uiOutput("results"),
+                    plotlyOutput("plot")
+                ),
+                tabPanel(
+                    "Interpretation ",
+                    tags$b("Interpretation:"),
+                    uiOutput("interpretation"),
+                )
+            )
+            
+            
+            
+            
+            
         )
     )
 )
@@ -71,13 +98,14 @@ server <- function(input, output) {
     output$tbl <- DT::renderDataTable({
         y <- extract(input$y)
         x <- extract(input$x)
-        DT::datatable(data.frame(x, y),
-                      extensions = "Buttons",
-                      options = list(
-                          lengthChange = FALSE,
-                          dom = "Blfrtip",
-                          buttons = c("copy", "csv", "excel", "pdf", "print")
-                      )
+        DT::datatable(
+            data.frame(x, y),
+            extensions = "Buttons",
+            options = list(
+                lengthChange = FALSE,
+                dom = "Blfrtip",
+                buttons = c("copy", "csv", "excel", "pdf", "print")
+            )
         )
     })
     
@@ -104,12 +132,24 @@ server <- function(input, output) {
         x <- extract(input$x)
         fit <- lm(y ~ x)
         withMathJax(
-            paste0("\\(\\hat{\\beta}_1 = \\dfrac{\\big(\\sum^n_{i = 1} x_i y_i \\big) - n \\bar{x} \\bar{y}}{\\sum^n_{i = 1} (x_i - \\bar{x})^2} = \\) ", round(fit$coef[[2]], 3)),
+            paste0(
+                "\\(\\hat{\\beta}_1 = \\dfrac{\\big(\\sum^n_{i = 1} x_i y_i \\big) - n \\bar{x} \\bar{y}}{\\sum^n_{i = 1} (x_i - \\bar{x})^2} = \\) ",
+                round(fit$coef[[2]], 3)
+            ),
             br(),
-            paste0("\\(\\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1 \\bar{x} = \\) ", round(fit$coef[[1]], 3)),
+            paste0(
+                "\\(\\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1 \\bar{x} = \\) ",
+                round(fit$coef[[1]], 3)
+            ),
             br(),
             br(),
-            paste0("\\( \\Rightarrow y = \\hat{\\beta}_0 + \\hat{\\beta}_1 x = \\) ", round(fit$coef[[1]], 3), " + ", round(fit$coef[[2]], 3), "\\( x \\)")
+            paste0(
+                "\\( \\Rightarrow y = \\hat{\\beta}_0 + \\hat{\\beta}_1 x = \\) ",
+                round(fit$coef[[1]], 3),
+                " + ",
+                round(fit$coef[[2]], 3),
+                "\\( x \\)"
+            )
         )
     })
     
@@ -126,10 +166,15 @@ server <- function(input, output) {
         fit <- lm(y ~ x)
         withMathJax(
             paste0(
-                "Adj. \\( R^2 = \\) ", round(summary(fit)$adj.r.squared, 3),
-                ", \\( \\beta_0 = \\) ", round(fit$coef[[1]], 3),
-                ", \\( \\beta_1 = \\) ", round(fit$coef[[2]], 3),
-                ", P-value ", "\\( = \\) ", signif(summary(fit)$coef[2, 4], 3)
+                "Adj. \\( R^2 = \\) ",
+                round(summary(fit)$adj.r.squared, 3),
+                ", \\( \\beta_0 = \\) ",
+                round(fit$coef[[1]], 3),
+                ", \\( \\beta_1 = \\) ",
+                round(fit$coef[[2]], 3),
+                ", P-value ",
+                "\\( = \\) ",
+                signif(summary(fit)$coef[2, 4], 3)
             )
         )
     })
@@ -138,35 +183,121 @@ server <- function(input, output) {
         y <- extract(input$y)
         x <- extract(input$x)
         fit <- lm(y ~ x)
-        if (summary(fit)$coefficients[1, 4] < 0.05 & summary(fit)$coefficients[2, 4] < 0.05) {
+        if (summary(fit)$coefficients[1, 4] < 0.05 &
+            summary(fit)$coefficients[2, 4] < 0.05) {
             withMathJax(
-                paste0("(Make sure the assumptions for linear regression (independance, linearity, normality and homoscedasticity) are met before interpreting the coefficients.)"),
+                paste0(
+                    "(Make sure the assumptions for linear regression (independance, linearity, normality and homoscedasticity) are met before interpreting the coefficients.)"
+                ),
                 br(),
-                paste0("For a (hypothetical) value of ", input$xlab, " = 0, the mean of ", input$ylab, " = ", round(fit$coef[[1]], 3), "."),
+                paste0(
+                    "For a (hypothetical) value of ",
+                    input$xlab,
+                    " = 0, the mean of ",
+                    input$ylab,
+                    " = ",
+                    round(fit$coef[[1]], 3),
+                    "."
+                ),
                 br(),
-                paste0("For an increase of one unit of ", input$xlab, ", ", input$ylab, ifelse(round(fit$coef[[2]], 3) >= 0, " increases (on average) by ", " decreases (on average) by "), abs(round(fit$coef[[2]], 3)), ifelse(abs(round(fit$coef[[2]], 3)) >= 2, " units", " unit"), ".")
+                paste0(
+                    "For an increase of one unit of ",
+                    input$xlab,
+                    ", ",
+                    input$ylab,
+                    ifelse(
+                        round(fit$coef[[2]], 3) >= 0,
+                        " increases (on average) by ",
+                        " decreases (on average) by "
+                    ),
+                    abs(round(fit$coef[[2]], 3)),
+                    ifelse(abs(round(
+                        fit$coef[[2]], 3
+                    )) >= 2, " units", " unit"),
+                    "."
+                )
             )
-        } else if (summary(fit)$coefficients[1, 4] < 0.05 & summary(fit)$coefficients[2, 4] >= 0.05) {
+        } else if (summary(fit)$coefficients[1, 4] < 0.05 &
+                   summary(fit)$coefficients[2, 4] >= 0.05) {
             withMathJax(
-                paste0("(Make sure the assumptions for linear regression (independance, linearity, normality and homoscedasticity) are met before interpreting the coefficients.)"),
+                paste0(
+                    "(Make sure the assumptions for linear regression (independance, linearity, normality and homoscedasticity) are met before interpreting the coefficients.)"
+                ),
                 br(),
-                paste0("For a (hypothetical) value of ", input$xlab, " = 0, the mean of ", input$ylab, " = ", round(fit$coef[[1]], 3), "."),
+                paste0(
+                    "For a (hypothetical) value of ",
+                    input$xlab,
+                    " = 0, the mean of ",
+                    input$ylab,
+                    " = ",
+                    round(fit$coef[[1]], 3),
+                    "."
+                ),
                 br(),
-                paste0("\\( \\beta_1 \\)", " is not significantly different from 0 (p-value = ", round(summary(fit)$coefficients[2, 4], 3), ") so there is no significant relationship between ", input$xlab, " and ", input$ylab, ".")
+                paste0(
+                    "\\( \\beta_1 \\)",
+                    " is not significantly different from 0 (p-value = ",
+                    round(summary(fit)$coefficients[2, 4], 3),
+                    ") so there is no significant relationship between ",
+                    input$xlab,
+                    " and ",
+                    input$ylab,
+                    "."
+                )
             )
-        } else if (summary(fit)$coefficients[1, 4] >= 0.05 & summary(fit)$coefficients[2, 4] < 0.05) {
+        } else if (summary(fit)$coefficients[1, 4] >= 0.05 &
+                   summary(fit)$coefficients[2, 4] < 0.05) {
             withMathJax(
-                paste0("(Make sure the assumptions for linear regression (independance, linearity, normality and homoscedasticity) are met before interpreting the coefficients.)"),
+                paste0(
+                    "(Make sure the assumptions for linear regression (independance, linearity, normality and homoscedasticity) are met before interpreting the coefficients.)"
+                ),
                 br(),
-                paste0("\\( \\beta_0 \\)", " is not significantly different from 0 (p-value = ", round(summary(fit)$coefficients[1, 4], 3), ") so when ", input$xlab, " = 0, the mean of ", input$ylab, " is not significantly different from 0."),
+                paste0(
+                    "\\( \\beta_0 \\)",
+                    " is not significantly different from 0 (p-value = ",
+                    round(summary(fit)$coefficients[1, 4], 3),
+                    ") so when ",
+                    input$xlab,
+                    " = 0, the mean of ",
+                    input$ylab,
+                    " is not significantly different from 0."
+                ),
                 br(),
-                paste0("For an increase of one unit of ", input$xlab, ", ", input$ylab, ifelse(round(fit$coef[[2]], 3) >= 0, " increases (on average) by ", " decreases (on average) by "), abs(round(fit$coef[[2]], 3)), ifelse(abs(round(fit$coef[[2]], 3)) >= 2, " units", " unit"), ".")
+                paste0(
+                    "For an increase of one unit of ",
+                    input$xlab,
+                    ", ",
+                    input$ylab,
+                    ifelse(
+                        round(fit$coef[[2]], 3) >= 0,
+                        " increases (on average) by ",
+                        " decreases (on average) by "
+                    ),
+                    abs(round(fit$coef[[2]], 3)),
+                    ifelse(abs(round(
+                        fit$coef[[2]], 3
+                    )) >= 2, " units", " unit"),
+                    "."
+                )
             )
         } else {
             withMathJax(
-                paste0("(Make sure the assumptions for linear regression (independance, linearity, normality and homoscedasticity) are met before interpreting the coefficients.)"),
+                paste0(
+                    "(Make sure the assumptions for linear regression (independance, linearity, normality and homoscedasticity) are met before interpreting the coefficients.)"
+                ),
                 br(),
-                paste0("\\( \\beta_0 \\)", " and ", "\\( \\beta_1 \\)", " are not significantly different from 0 (p-values = ", round(summary(fit)$coefficients[1, 4], 3), " and ", round(summary(fit)$coefficients[2, 4], 3), ", respectively) so the mean of ", input$ylab, " is not significantly different from 0.")
+                paste0(
+                    "\\( \\beta_0 \\)",
+                    " and ",
+                    "\\( \\beta_1 \\)",
+                    " are not significantly different from 0 (p-values = ",
+                    round(summary(fit)$coefficients[1, 4], 3),
+                    " and ",
+                    round(summary(fit)$coefficients[2, 4], 3),
+                    ", respectively) so the mean of ",
+                    input$ylab,
+                    " is not significantly different from 0."
+                )
             )
         }
     })
@@ -188,7 +319,10 @@ server <- function(input, output) {
     output$downloadReport <- downloadHandler(
         filename = function() {
             paste("my-report", sep = ".", switch(
-                input$format, PDF = "pdf", HTML = "html", Word = "docx"
+                input$format,
+                PDF = "pdf",
+                HTML = "html",
+                Word = "docx"
             ))
         },
         
@@ -204,7 +338,9 @@ server <- function(input, output) {
             library(rmarkdown)
             out <- render("report.Rmd", switch(
                 input$format,
-                PDF = pdf_document(), HTML = html_document(), Word = word_document()
+                PDF = pdf_document(),
+                HTML = html_document(),
+                Word = word_document()
             ))
             file.rename(out, file)
         }
