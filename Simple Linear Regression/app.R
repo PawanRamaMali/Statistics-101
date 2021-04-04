@@ -7,7 +7,6 @@ library(pander)
 
 
 ui <- fluidPage(
-  
     titlePanel("Statistics 101 - Simple linear regression"),
     h4(
         tags$a(href = "https://www.github.com/PawanRamaMali", "Pawan Rama Mali")
@@ -35,7 +34,7 @@ ui <- fluidPage(
                 placeholder = "y label"
             ),
             hr(),
-   
+            
             radioButtons("format", "Download report:", c("HTML", "PDF", "Word"),
                          inline = TRUE),
             checkboxInput("echo", "Show code in report?", FALSE),
@@ -47,16 +46,17 @@ ui <- fluidPage(
         
         mainPanel(
             tabsetPanel(
-                tabPanel("Data ",
-                         br(),
-                         tags$b("Input data:"),
-                         DT::dataTableOutput("tbl"),
-                         br()),
-                tabPanel("Parameters",
-                         uiOutput("data"),)
-                ,
+                tabPanel(
+                    "Data ",
+                    br(),
+                    tags$b("Input data:"),
+                    DT::dataTableOutput("tbl"),
+                    br()
+                ),
+                
                 tabPanel(
                     "Compute parameters by Hand",
+                    uiOutput("data"),
                     tags$b("Compute parameters by hand:"),
                     uiOutput("by_hand")
                 ),
