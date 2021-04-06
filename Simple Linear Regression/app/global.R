@@ -1,11 +1,12 @@
 ###################
 # global.R
 # 
-# Anything you want shared between your ui and server, define here.
-###################
+library(shiny)
+library(ggplot2)
+library(plotly)
+library(rmarkdown)
+library(knitr)
+library(pander)
 
 
-set.seed(122)
-df <- data.frame(
-  n = rnorm(500),
-  m = rnorm(100))
+
